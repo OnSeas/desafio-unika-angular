@@ -1,0 +1,22 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+$toolbarHeight : 70px;
+
+#toolbarId{
+  height: $toolbarHeight;
+}
+
+.pageBody{
+  height: calc(100vh - $toolbarHeight);
+}
+
+.sideNav{
+  min-width: 250px;
+}
+
+.content-card{
+  margin: 0.5rem;
+  height: 94.5%; //TODO descobrir o que acontece aqui.
+}
