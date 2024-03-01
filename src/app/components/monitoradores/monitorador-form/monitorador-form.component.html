@@ -1,1 +1,75 @@
-<p>monitorador-form works!</p>
+<div class="content-center col-6">
+  <div class="page-title mb-3">
+    <!-- TODO Alterar título conforme operação. -->
+    <h2>Formulário Monitorador</h2>
+  </div>
+  <div>
+    <form class="form-max-spacing">
+      <div class="row-2">
+        <div class="row-col">
+          <input type="radio" id="pfId" name="tipoPessoa" value="PESSOA_FISICA" class="btn-radio" (click)="pessoaFisica()">
+          <label for="pfId" class="btn-primary">Pessoa F&iacute;sica</label><br>
+        </div>
+        <div class="row-col">
+          <input type="radio" id="pjId" name="tipoPessoa" value="PESSOA_JURIDICA" (click)="pessoaJuridica()">
+          <label for="pjId">Pessoa Jur&iacute;dica</label><br>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Email</mat-label>
+          <input matInput #emailInput placeholder="pat@example.com" maxlength="50" [formControl]="email" required>
+          <mat-hint align="end">{{emailInput.value.length}}/50</mat-hint>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+        <!--TODO tem que ser data-->
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Email</mat-label>
+          <input matInput #emailInput placeholder="pat@example.com" maxlength="50" [formControl]="email" required>
+          <mat-hint align="end">{{emailInput.value.length}}/50</mat-hint>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="tipoPessoa == 'PF'" class="row-3">
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="Seu nome" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>CPF</mat-label>
+          <input matInput placeholder="000.000.000-00" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>RG</mat-label>
+          <input matInput placeholder="00.000.000-0" required>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="tipoPessoa == 'PJ'" class="row-3">
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Razão Social</mat-label>
+          <input matInput placeholder="Empresa X" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>CNPJ</mat-label>
+          <input matInput placeholder="00.000.000/0000-00" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Inscrição Estadual</mat-label>
+          <input matInput placeholder="0000000-00" required>
+        </mat-form-field>
+      </div>
+
+      <div class="row col-5">
+        <input type="submit" value="Salvar" class="row-col btn-primary">
+      </div>
+    </form>
+  </div>
+</div>

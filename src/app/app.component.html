@@ -4,7 +4,7 @@
     <button (click)="drawer.toggle()" mat-icon-button>
       <mat-icon>menu</mat-icon>
     </button>
-    <span>App Monitoradores</span>
+    <a [routerLink]="['']" class="link-white">App Monitoradores</a>
     <span class="example-spacer"></span>
     <button routerLink="" mat-button>Sair</button>
   </mat-toolbar>
@@ -20,7 +20,10 @@
           <button mat-button><mat-icon>home</mat-icon> home</button>
         </mat-list-item>
         <mat-list-item [routerLink]="['monitoradores']">
-          <button mat-button><mat-icon>dashboard</mat-icon> monitorador TESTE</button>
+          <button mat-button><mat-icon>dashboard</mat-icon> monitoradores</button>
+        </mat-list-item>
+        <mat-list-item [routerLink]="['monitoradores/form']">
+          <button mat-button><mat-icon>list_alt</mat-icon> monitorador form</button>
         </mat-list-item>
       </mat-nav-list>
     </mat-drawer>

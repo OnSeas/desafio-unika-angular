@@ -2,10 +2,15 @@
   flex: 1 1 auto;
 }
 
-$toolbarHeight : 70px;
+$toolbarHeight : 60px;
 
 #toolbarId{
   height: $toolbarHeight;
+}
+
+.link-white{
+  color: white;
+  text-decoration: none;
 }
 
 .pageBody{
@@ -18,5 +23,5 @@ $toolbarHeight : 70px;
 
 .content-card{
   margin: 0.5rem;
-  height: 94.5%; //TODO descobrir o que acontece aqui.
+  height: 94.5%; // TODO descobrir o que acontece aqui.
 }
