@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {Monitorador} from "../Monitorador";
+import {MonitoradorService} from "../monitorador.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-monitorador-form',
@@ -8,27 +10,30 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class MonitoradorFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private monitoradorService: MonitoradorService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
-  tipoPessoa? : string;
+  monitorador: Monitorador = new Monitorador();
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Campo email não pode ser nulo';
+  salvar(): void {
+    if (!this.monitorador.id) {
+      console.log(this.monitorador);
+      this.monitoradorService.cadastrarMonitorador(this.monitorador).subscribe({
+        next: (monitorador: Monitorador) =>{
+          console.log(monitorador);
+          alert("Monitorador criado com sucesso!");
+          this.router.navigate(['']);
+        },
+        error: (erro) => {
+          alert("Requisição inválida!");
+        }
+      });
     }
-    return this.email.hasError('email') ? 'Este email não é válido' : '';
+    else console.log("Editar: " + this.monitorador);
   }
-
-  pessoaFisica(){
-    this.tipoPessoa = "PF"
-  }
-
-  pessoaJuridica(){
-    this.tipoPessoa = "PJ"
-  }
-
 }

@@ -7,10 +7,11 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { MonitoradorListComponent } from './monitorador-list/monitorador-list.component';
 import {MatTableModule} from "@angular/material/table";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import {MatTableModule} from "@angular/material/table";
     MatRadioModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule,
+    MatButtonModule
   ]
 })
 export class MonitoradoresModule { }

@@ -13,6 +13,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatBadgeModule} from "@angular/material/badge";
 import { HomeComponent } from './components/home/home.component';
 import {MatCardModule} from "@angular/material/card";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {MatCardModule} from "@angular/material/card";
     MatListModule,
     MatMenuModule,
     MatBadgeModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
