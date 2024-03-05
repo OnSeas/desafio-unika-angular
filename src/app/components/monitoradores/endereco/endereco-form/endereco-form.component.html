@@ -1,0 +1,94 @@
+<div class="content-center col-6">
+  <div class="page-title mb-4">
+    <!-- TODO Alterar título conforme operação. -->
+    <h2>Formulário Endere&ccedil;o</h2>
+  </div>
+  <div>
+    <form #formEndereco="ngForm" class="form-max-spacing">
+
+      <div class="row-2 pb-1">
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Endere&ccedil;o</mat-label>
+          <input matInput
+                 [(ngModel)] = "endereco.endereco"
+                 name="endereco"
+                 type="text"
+                 placeholder="Rua 01, Qd 02, Lt 03"
+                 required>
+        </mat-form-field>
+
+        <!--TODO arrumar data-->
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>CEP</mat-label>
+          <input matInput
+                 [(ngModel)] = "endereco.cep"
+                 name="cep"
+                 type="text"
+                 placeholder="00000-000">
+        </mat-form-field>
+      </div>
+
+      <div class="row-3 pb-1">
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Cidade</mat-label>
+          <input matInput
+                 [(ngModel)] = "endereco.cidade"
+                 name="cidade"
+                 type="text"
+                 placeholder="Anápolis">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Bairro</mat-label>
+          <input matInput
+                 [(ngModel)] = "endereco.bairro"
+                 name="bairro"
+                 type="text"
+                 placeholder="São João">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-select placeholder="Estado" [(ngModel)] = "endereco.estado" name="estado">
+            <mat-option value="GO">GO</mat-option>
+            <mat-option value="SP">SP</mat-option>
+            <mat-option value="RJ">RJ</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row-2 pb-1">
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>N&uacute;mero</mat-label>
+          <input matInput
+                 [(ngModel)] = "endereco.numero"
+                 name="numero"
+                 type="text"
+                 placeholder="000">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="row-col">
+          <mat-label>Telefone</mat-label>
+          <input matInput
+                 [(ngModel)] = "endereco.telefone"
+                 name="telefone"
+                 type="text"
+                 placeholder="(00)00000-0000">
+        </mat-form-field>
+      </div>
+
+      <div class="row col-5">
+        <input type="submit"
+               value="Salvar"
+               class="row-col btn-primary"
+               (click)="salvar()">
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="mt-3 mb-3">
+  <div class="content-center col-10">
+    <app-endereco-list></app-endereco-list>
+  </div>
+</div>
+
