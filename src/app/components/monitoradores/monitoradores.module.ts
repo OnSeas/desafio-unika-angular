@@ -12,6 +12,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import { MonitoradorListComponent } from './monitorador-list/monitorador-list.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {EnderecoModule} from "./endereco/endereco.module";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -19,18 +22,21 @@ import {MatButtonModule} from "@angular/material/button";
     MonitoradorFormComponent,
     MonitoradorListComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(MonitoradoresRoutes),
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatTableModule,
-    FormsModule,
-    MatButtonModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(MonitoradoresRoutes),
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatTableModule,
+        FormsModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        EnderecoModule,
+        MatCardModule
+    ]
 })
 export class MonitoradoresModule { }

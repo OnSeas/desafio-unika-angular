@@ -15,8 +15,17 @@ export const MonitoradoresRoutes: Routes = [
     children : []
   },
   {
-    path : 'form',
+    path : 'newForm',
     component : MonitoradorFormComponent,
     children : []
+  },
+  {
+    path : 'editForm/:id',
+    component : MonitoradorFormComponent,
+    children : []
+  },
+  {
+    path: 'enderecos/',
+    loadChildren: () => import('./endereco/endereco.module').then(mod => mod.EnderecoModule)
   }
 ];

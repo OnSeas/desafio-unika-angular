@@ -6,10 +6,10 @@
   <div>
     <form #formMonitorador="ngForm" class="form-max-spacing">
 
-      <div>
-        <mat-radio-group aria-label="Select an option" [(ngModel)] = "monitorador.tipoPessoa" name="tipoPessoa">
-          <mat-radio-button value="0">Pessoa Física</mat-radio-button>
-          <mat-radio-button value="1">Pessoa Jurídica</mat-radio-button>
+      <div class="row-2 col-4 pb-3">
+        <mat-radio-group [(ngModel)] = "monitorador.tipoPessoa" name="tipoPessoa" aria-label="Select an option">
+          <mat-radio-button [value]="tipoPessoa.PESSOA_FISICA" style="margin-right: 0.5rem">Pessoa Física</mat-radio-button>
+          <mat-radio-button [value]="tipoPessoa.PESSOA_JURIDICA">Pessoa Jurídica</mat-radio-button>
         </mat-radio-group>
       </div>
 
@@ -24,19 +24,18 @@
                  required>
         </mat-form-field>
 
+        <!--TODO arrumar data-->
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Data de nascimento</mat-label>
           <input matInput
                  [(ngModel)] = "monitorador.dataNascimento"
                  name="dataNascimento"
-                 type="date"
-                 placeholder="dd/mm/aaaa"
-                 pattern="dd/MM/yyyy"
-                 required>
+                 type="text"
+                 placeholder="dd/mm/aaaa">
         </mat-form-field>
       </div>
 
-      <div *ngIf="monitorador.tipoPessoa == 0" class="row-3 pb-1">
+      <div *ngIf="monitorador.tipoPessoa == tipoPessoa.PESSOA_FISICA" class="row-3 pb-1">
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Nome</mat-label>
           <input matInput
@@ -65,7 +64,7 @@
         </mat-form-field>
       </div>
 
-      <div *ngIf="monitorador.tipoPessoa == 1" class="row-3 pb-1">
+      <div *ngIf="monitorador.tipoPessoa == tipoPessoa.PESSOA_JURIDICA" class="row-3 pb-1">
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Razão Social</mat-label>
           <input matInput
@@ -103,3 +102,10 @@
     </form>
   </div>
 </div>
+
+<div class="mt-3 mb-3">
+  <div class="content-center col-10">
+    <app-endereco-list></app-endereco-list>
+  </div>
+</div>
+

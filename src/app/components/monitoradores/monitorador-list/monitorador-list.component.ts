@@ -9,7 +9,7 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./monitorador-list.component.scss']
 })
 export class MonitoradorListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'email', 'dataNascimento', 'CPF/CNPJ', 'opcoes'];
+  displayedColumns: string[] = ['position', 'tipoPessoa', 'email', 'dataNascimento', 'CPF/CNPJ', 'opcoes'];
   dataSource = new MatTableDataSource<Monitorador>;
 
   constructor(private monitoradorService: MonitoradorService) {}
@@ -23,10 +23,16 @@ export class MonitoradorListComponent implements OnInit {
 
   deletarMonitorador(id: number){ // TODO Puxar msg do backend
     if (confirm("Tem certeza que deseja deletar o Monitorador "+id+"?")){
-      this.monitoradorService.deletarMonitorador(id);
-      this.dataSource.data = this.dataSource.data.filter((element) => element.id !== id);
-      alert("Monitorador excluído com sucesso!");
+      this.monitoradorService.deletarMonitorador(id).subscribe({
+        next: (msg: string) => {
+          alert("Monitorador excluído com sucesso!");
+          this.dataSource.data = this.dataSource.data.filter((element) => element.id !== id);
+        },
+        error: (err) =>{
+          console.log(err);
+          alert(err.error)
+        }
+      })
     }
   }
-
 }

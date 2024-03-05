@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Monitorador} from "./Monitorador";
 import {Observable} from "rxjs";
@@ -19,7 +19,15 @@ export class MonitoradorService {
     return this.http.post<Monitorador>(`${this.urlBackend}/cadastrar`, moniotador);
   }
 
-  public deletarMonitorador(id: number){
-    console.log(this.http.delete<string>(`${this.urlBackend}/deletar/${id}`)); // TODO entender como retornar as msgs do backend
+  public buscarById(id: number): Observable<Monitorador>{
+    return this.http.get<Monitorador>(`${this.urlBackend}/buscar/${id}`);
+  }
+
+  public editarMonitorador(monitorador: Monitorador, id: number): Observable<Monitorador>{
+    return this.http.put<Monitorador>(`${this.urlBackend}/atualizar/${id}`, monitorador);
+  }
+
+  public deletarMonitorador(id: number): Observable<string>{
+    return this.http.delete<string>(`${this.urlBackend}/deletar/${id}`); // TODO entender como retornar as msgs do backend
   }
 }
