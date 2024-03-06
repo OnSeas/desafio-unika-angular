@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {Endereco} from "../Endereco";
-import {Monitorador} from "../../Monitorador";
+import {EnderecoService} from "../endereco.service";
 
 @Component({
   selector: 'app-endereco-list',
@@ -9,12 +9,14 @@ import {Monitorador} from "../../Monitorador";
   styleUrls: ['./endereco-list.component.scss']
 })
 export class EnderecoListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'endereco', 'cep', 'cidade', 'estado'];
+  displayedColumns: string[] = ['position', 'endereco', 'cep', 'cidade', 'estado', 'opcoes', 'principal'];
   dataSource = new MatTableDataSource<Endereco>;
-  constructor() {}
+
+  @Input() monitoradorId: string|null = null;
+
+  constructor(private enderecoService: EnderecoService) {}
 
   ngOnInit(): void {
     this.dataSource.data = [];
   }
-
 }

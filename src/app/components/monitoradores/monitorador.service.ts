@@ -27,7 +27,7 @@ export class MonitoradorService {
     return this.http.put<Monitorador>(`${this.urlBackend}/atualizar/${id}`, monitorador);
   }
 
-  public deletarMonitorador(id: number): Observable<string>{
-    return this.http.delete<string>(`${this.urlBackend}/deletar/${id}`); // TODO entender como retornar as msgs do backend
+  public deletarMonitorador(id: number){
+    return this.http.delete(`${this.urlBackend}/deletar/${id}`);
   }
 }

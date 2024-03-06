@@ -21,19 +21,21 @@ export class MonitoradorFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.getMonitoradorId();
     if(id){
-      this.monitoradorService.buscarById(parseInt(id)).subscribe( {
-        next: (monitorador: Monitorador) => {
+      this.monitoradorService.buscarById(parseInt(id)).subscribe({next: (monitorador) => {
           this.monitorador = monitorador;
-          this.monitorador.tipoPessoa = getTipoPessoa(monitorador.tipoPessoa.toString());
+          monitorador.tipoPessoa = getTipoPessoa(monitorador.tipoPessoa.toString());
         },
-        error: (err) =>{
-          alert("Erro ao editar monitorador.");
-          this.router.navigate(['']);
+        error: (err) => {
+          alert(err.error);
         }
       });
     }
+  }
+
+  getMonitoradorId(){
+    return this.route.snapshot.paramMap.get('id');
   }
 
   salvar(): void {
