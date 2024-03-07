@@ -24,7 +24,7 @@ export class MonitoradorListComponent implements OnInit {
   deletarMonitorador(id: number){ // TODO ta dando erro
     if (confirm("Tem certeza que deseja deletar o Monitorador "+id+"?")){
       this.monitoradorService.deletarMonitorador(id).subscribe({
-        next: () =>{
+        next: (msg: String) =>{
           alert("Exluiu o monitorador PORRA!!!!!!!");
           // TODO filter
         }, error: (err) =>{

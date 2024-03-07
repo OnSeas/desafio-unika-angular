@@ -14,6 +14,11 @@ import {MatBadgeModule} from "@angular/material/badge";
 import { HomeComponent } from './components/home/home.component';
 import {MatCardModule} from "@angular/material/card";
 import {HttpClientModule} from "@angular/common/http";
+import {MatDialogModule} from "@angular/material/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
+import {IConfig, NgxMaskModule} from "ngx-mask";
+
+export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -32,7 +37,10 @@ import {HttpClientModule} from "@angular/common/http";
     MatMenuModule,
     MatBadgeModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

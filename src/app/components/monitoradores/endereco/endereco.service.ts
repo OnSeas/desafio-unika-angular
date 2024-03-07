@@ -11,7 +11,7 @@ export class EnderecoService {
   constructor(private http: HttpClient) { }
 
   buscarEnderecos(idMonitorador: number){
-    return this.http.get<Endereco[]>(`${this.urlBackend}+/`)
+    return this.http.get<Endereco[]>(`${this.urlBackend}/listar/${idMonitorador}`);
   }
 
 }

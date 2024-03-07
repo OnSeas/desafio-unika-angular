@@ -11,6 +11,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import {MatDialogModule} from "@angular/material/dialog";
+import {NgxMaskModule} from "ngx-mask";
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import {MatSelectModule} from "@angular/material/select";
     MatInputModule,
     MatRadioModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule,
+    NgxMaskModule
   ]
 })
 export class EnderecoModule { }

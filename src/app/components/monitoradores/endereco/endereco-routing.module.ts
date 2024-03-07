@@ -5,11 +5,6 @@ import {EnderecoFormComponent} from "./endereco-form/endereco-form.component";
 
 const routes: Routes = [
   {
-    path: 'listar-enderecos',
-    component: EnderecoListComponent,
-    children: []
-  },
-  {
     path: 'criarForm',
     component: EnderecoFormComponent,
     children: []

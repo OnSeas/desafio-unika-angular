@@ -39,6 +39,8 @@ export class MonitoradorFormComponent implements OnInit {
   }
 
   salvar(): void {
+    // Entender como pegar a lista de endereços aqui
+
     if (!this.monitorador.id) this.monitoradorService.cadastrarMonitorador(this.monitorador).subscribe({
         next: (monitorador: Monitorador) =>{
           console.log("monitorador BD: "+monitorador);
