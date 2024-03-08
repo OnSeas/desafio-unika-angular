@@ -21,12 +21,12 @@ export class MonitoradorListComponent implements OnInit {
     });
   }
 
-  deletarMonitorador(id: number){ // TODO ta dando erro
+  deletarMonitorador(id: number){
     if (confirm("Tem certeza que deseja deletar o Monitorador "+id+"?")){
       this.monitoradorService.deletarMonitorador(id).subscribe({
-        next: (msg: String) =>{
-          alert("Exluiu o monitorador PORRA!!!!!!!");
-          // TODO filter
+        next: (monitoradorRes) =>{
+          alert("Monitorador excluído com sucesso!");
+          this.dataSource.data = this.dataSource.data.filter(m => m.id != monitoradorRes.id);
         }, error: (err) =>{
           alert(err.error);
         }

@@ -13,6 +13,7 @@
                      formControlName="cep"
                      type="text"
                      placeholder="00000-000"
+                     (blur)="buscarEndereco()"
                      [mask]="'00000-000'">
               <mat-error *ngIf="enderecoForm.hasError('required', 'cep')">* CEP é <strong>obrigat&oacute;rio</strong></mat-error>
               <mat-error *ngIf="enderecoForm.hasError('pattern', 'cep')">* CEP inválido</mat-error>
@@ -50,7 +51,6 @@
                      placeholder="São João">
               <mat-error *ngIf="enderecoForm.hasError('required', 'bairro')">* Bairro é <strong>obrigat&oacute;rio</strong></mat-error>
               <mat-error *ngIf="enderecoForm.hasError('minlength', 'bairro') || enderecoForm.hasError('maxlength', 'bairro')">* Bairro tem que ter entre 3 e 20 caracteres</mat-error>
-              <mat-error *ngIf="enderecoForm.hasError('pattern', 'bairro')">* Bairro contém caracteres inv&aacute;lidos</mat-error>
             </mat-form-field>
 
             <!--TODO verificar se está certo-->

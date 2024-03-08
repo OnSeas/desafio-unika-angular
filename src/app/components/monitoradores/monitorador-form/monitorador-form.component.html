@@ -4,34 +4,37 @@
     <h2>Formulário Monitorador</h2>
   </div>
   <div>
-    <form #formMonitorador="ngForm" class="form-max-spacing">
 
-      <div class="row-2 col-4 pb-3">
-        <mat-radio-group [(ngModel)] = "monitorador.tipoPessoa" name="tipoPessoa" aria-label="Select an option">
-          <mat-radio-button [value]="tipoPessoa.PESSOA_FISICA" style="margin-right: 0.5rem">Pessoa Física</mat-radio-button>
-          <mat-radio-button [value]="tipoPessoa.PESSOA_JURIDICA">Pessoa Jurídica</mat-radio-button>
-        </mat-radio-group>
-      </div>
+    <div class="row-2 col-4 pb-3">
+      <mat-radio-group [(ngModel)] = "monitorador.tipoPessoa" name="tipoPessoa" aria-label="Select an option">
+        <mat-radio-button [value]="tipoPessoa.PESSOA_FISICA" style="margin-right: 0.5rem">Pessoa Física</mat-radio-button>
+        <mat-radio-button [value]="tipoPessoa.PESSOA_JURIDICA">Pessoa Jurídica</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
+    <form [formGroup]="monitoradorForm" class="form-max-spacing">
       <div class="row-2 pb-1">
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Email</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.email"
+                 formControlName="email"
                  name="email"
                  type="email"
-                 placeholder="email@email.com"
-                 required>
+                 placeholder="email@email.com">
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'email')">* Email é <strong>obrigat&oacute;rio</strong></mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('maxlength', 'email')">* Email tem que ter no m&aacute;ximo 50 caracteres</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('email', 'email')">* Email inválido</mat-error>
         </mat-form-field>
 
         <!--TODO arrumar data-->
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Data de nascimento</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.dataNascimento"
+                 formControlName="dataNascimento"
                  name="dataNascimento"
                  type="text"
                  placeholder="dd/mm/aaaa">
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'dataNascimento')">* Data de nascimento é <strong>obrigat&oacute;rio</strong></mat-error>
         </mat-form-field>
       </div>
 
@@ -39,28 +42,34 @@
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Nome</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.nome"
+                 formControlName="nome"
                  name="nome"
                  type="text"
                  placeholder="Seu nome">
+          <mat-error *ngIf="monitoradorForm.hasError('minlength', 'nome') || monitoradorForm.hasError('maxlength', 'nome')">* Nome deve ter entre 3 e 30 caracteres</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('pattern', 'nome')">* Nome contém caracteres inválido</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>CPF</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.cpf"
+                 formControlName="cpf"
                  name="cpf"
                  type="text"
-                 placeholder="000.000.000-00">
+                 placeholder="000.000.000-00"
+                 [mask]="'000.000.000-00'">
+          <mat-error *ngIf="monitoradorForm.hasError('pattern', 'cpf')">* CPF inválido</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>RG</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.rg"
+                 formControlName="rg"
                  name="rg"
                  type="text"
-                 placeholder="00.000.000-0">
+                 placeholder="00.000.000-0"
+                 [mask]="'00.000.000-0'">
+          <mat-error *ngIf="monitoradorForm.hasError('pattern', 'rg')">* RG inválido</mat-error>
         </mat-form-field>
       </div>
 
@@ -68,7 +77,6 @@
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Razão Social</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.razaoSocial"
                  name="razaoSocial"
                  type="text"
                  placeholder="Empresa X">
@@ -77,27 +85,34 @@
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>CNPJ</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.cnpj"
+                 formControlName="cnpj"
                  name="cnpj"
                  type="text"
-                 placeholder="00.000.000/0000-00">
+                 placeholder="00.000.000/0000-00"
+                 [mask]="'00.000.000/0000-00'">
+          <mat-error *ngIf="monitoradorForm.hasError('pattern', 'cnpj')">* CNPJ inválido</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Inscrição Estadual</mat-label>
           <input matInput
-                 [(ngModel)] = "monitorador.inscricaoEstadual"
                  name="inscricaoEstadual"
                  type="text"
                  placeholder="0000000-00">
         </mat-form-field>
       </div>
 
-      <div class="row col-5">
-        <input type="submit"
-               value="Salvar"
-               class="row-col btn-primary"
-               (click)="salvar()">
+      <div class="row-2 col-7">
+        <button mat-stroked-button
+                class="row-col"
+                style="margin-right: 0.5rem"
+                (click)="router.navigate(['../monitoradores'])">Cancelar</button>
+
+        <button mat-flat-button
+                color="primary"
+                class="row-col"
+                type="submit"
+                (click)="salvar()">Salvar</button>
       </div>
     </form>
   </div>

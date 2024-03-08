@@ -15,6 +15,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {EnderecoModule} from "./endereco/endereco.module";
 import {MatCardModule} from "@angular/material/card";
+import {NgxMaskModule} from "ngx-mask";
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {MatCardModule} from "@angular/material/card";
         MatButtonModule,
         MatButtonToggleModule,
         EnderecoModule,
-        MatCardModule
+        MatCardModule,
+        NgxMaskModule
     ]
 })
 export class MonitoradoresModule { }
