@@ -4,6 +4,37 @@
       <h2>Lista de monitoradores</h2>
     </div>
 
+    <div class="content-end col-3">
+      <form>
+        <div>
+          <mat-form-field appearance="outline" class="row-col">
+            <mat-select  placeholder="Tipo de pesquisa">
+              <mat-option value="">CPF</mat-option>
+              <mat-option value="">CNPJ</mat-option>
+              <mat-option value="">Email</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Pesquisar</mat-label>
+            <input matInput
+                   name="pesquisarInput"
+                   type="text">
+          </mat-form-field>
+
+          <button mat-flat-button
+                  color="primary"
+                  type="submit">Pesquisar</button>
+        </div>
+        <div>
+          <mat-checkbox class="example-margin">Pessoas Físicas</mat-checkbox>
+          <mat-checkbox class="example-margin">Pessoas Jurídicas</mat-checkbox>
+          <mat-checkbox class="example-margin">Apenas ativadas</mat-checkbox>
+        </div>
+      </form>
+    </div>
+
+
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef> # </th>

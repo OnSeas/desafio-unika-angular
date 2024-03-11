@@ -14,6 +14,7 @@ export class EnderecoFormComponent implements OnInit {
   enderecoForm!: FormGroup;
   idMonitorador: string|null = null;
   endereco: Endereco|null = null;
+  telefoneMask : string = ''
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +30,7 @@ export class EnderecoFormComponent implements OnInit {
     this.enderecoForm = this.formBuilder.group({
       id: [''],
       cep: ['', [Validators.required, Validators.pattern('\\d{5}-?\\d{3}')]],
-      endereco: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      endereco: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       cidade: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑª ]*')]],
       bairro: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       estado: ['', Validators.required],
@@ -40,6 +41,9 @@ export class EnderecoFormComponent implements OnInit {
     });
 
     if (this.endereco) this.enderecoForm.setValue(this.endereco);
+
+    //Mascára que muda conforme o tamanho do telefone.
+    this.enderecoForm.get('telefone')?.valueChanges.subscribe(text => text.length < 11 ? this.telefoneMask = '(00) 0000-00009' : this.telefoneMask = '(00) 00000-0000');
   }
 
   cancelar(){
@@ -105,4 +109,8 @@ export class EnderecoFormComponent implements OnInit {
       }
     });
   }
+
+
+
+  protected readonly length = length;
 }

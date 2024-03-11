@@ -22,12 +22,14 @@
             <mat-form-field appearance="outline" class="row-col">
               <mat-label>Endere&ccedil;o</mat-label>
               <input matInput
+                     #enderecoId
                      formControlName="endereco"
                      type="text"
                      placeholder="Rua 01, Qd 02, Lt 03"
                      required>
               <mat-error *ngIf="enderecoForm.hasError('required', 'endereco')">* Endere&ccedil;o é <strong>obrigat&oacute;rio</strong></mat-error>
-              <mat-error *ngIf="enderecoForm.hasError('minlength', 'endereco') || enderecoForm.hasError('maxlength', 'endereco')">* Endere&ccedil;o tem que ter entre 3 e 30 caracteres</mat-error>
+              <mat-error *ngIf="enderecoForm.hasError('minlength', 'endereco') || enderecoForm.hasError('maxlength', 'endereco')">* Endere&ccedil;o deve ter entre 3 e 50 caracteres. Tem: {{enderecoId.value.length}}</mat-error>
+              <mat-hint align="end">{{enderecoId.value.length}} /50</mat-hint>
             </mat-form-field>
           </div>
 
@@ -35,25 +37,28 @@
             <mat-form-field appearance="outline" class="row-col">
               <mat-label>Cidade</mat-label>
               <input matInput
+                     #cidade
                      formControlName="cidade"
                      type="text"
                      placeholder="Anápolis">
               <mat-error *ngIf="enderecoForm.hasError('required', 'cidade')">* Cidade é <strong>obrigat&oacute;rio</strong></mat-error>
-              <mat-error *ngIf="enderecoForm.hasError('minlength', 'cidade') || enderecoForm.hasError('maxlength', 'cidade')">* Cidade tem que ter entre 3 e 20 caracteres</mat-error>
+              <mat-error *ngIf="enderecoForm.hasError('minlength', 'cidade') || enderecoForm.hasError('maxlength', 'cidade')">* Cidade deve ter entre 3 e 20 caracteres. Tem: {{cidade.value.length}}</mat-error>
               <mat-error *ngIf="enderecoForm.hasError('pattern', 'cidade')">* Cidade contém caracteres inv&aacute;lidos</mat-error>
+              <mat-hint align="end">{{cidade.value.length}} /20</mat-hint>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="row-col">
               <mat-label>Bairro</mat-label>
               <input matInput
+                     #bairro
                      formControlName="bairro"
                      type="text"
                      placeholder="São João">
               <mat-error *ngIf="enderecoForm.hasError('required', 'bairro')">* Bairro é <strong>obrigat&oacute;rio</strong></mat-error>
-              <mat-error *ngIf="enderecoForm.hasError('minlength', 'bairro') || enderecoForm.hasError('maxlength', 'bairro')">* Bairro tem que ter entre 3 e 20 caracteres</mat-error>
+              <mat-error *ngIf="enderecoForm.hasError('minlength', 'bairro') || enderecoForm.hasError('maxlength', 'bairro')">* Bairro deve ter entre 3 e 20 caracteres. Tem: {{bairro.value.length}}</mat-error>
+              <mat-hint align="end">{{bairro.value.length}} /30</mat-hint>
             </mat-form-field>
 
-            <!--TODO verificar se está certo-->
             <mat-form-field appearance="outline" class="row-col">
               <mat-select formControlName="estado" placeholder="Estado">
                 <mat-option value="AM">AM</mat-option>
@@ -95,7 +100,7 @@
                      type="text"
                      placeholder="000">
               <mat-error *ngIf="enderecoForm.hasError('required', 'numero')">* N&uacute;mero é <strong>obrigat&oacute;rio</strong></mat-error>
-              <mat-error *ngIf="enderecoForm.hasError('maxlength', 'numero')">* N&uacute;mero tem que ter no m&aacute;ximo 5 caracteres</mat-error>
+              <mat-error *ngIf="enderecoForm.hasError('maxlength', 'numero')">* N&uacute;mero deve ter no m&aacute;ximo 5 caracteres</mat-error>
             </mat-form-field>
 
             <!--TODO arrumar mask-->
@@ -104,8 +109,7 @@
               <input matInput
                      formControlName="telefone"
                      type="text"
-                     [mask]="'(00)00000-0000'"
-                     placeholder="(00)00000-0000">
+                     [mask]="telefoneMask">
               <mat-error *ngIf="enderecoForm.hasError('required', 'telefone')">* Telefone é <strong>obrigat&oacute;rio</strong></mat-error>
               <mat-error *ngIf="enderecoForm.hasError('pattern', 'telefone')">* Telefone inválido</mat-error>
             </mat-form-field>

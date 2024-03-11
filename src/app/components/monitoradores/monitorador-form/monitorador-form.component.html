@@ -7,8 +7,9 @@
 
     <div class="row-2 col-4 pb-3">
       <mat-radio-group [(ngModel)] = "monitorador.tipoPessoa" name="tipoPessoa" aria-label="Select an option">
-        <mat-radio-button [value]="tipoPessoa.PESSOA_FISICA" style="margin-right: 0.5rem">Pessoa Física</mat-radio-button>
-        <mat-radio-button [value]="tipoPessoa.PESSOA_JURIDICA">Pessoa Jurídica</mat-radio-button>
+        <mat-radio-button [value]="tipoPessoa.PESSOA_FISICA" (click)="adcionarRequiredPF()" style="margin-right: 0.5rem">Pessoa Física</mat-radio-button>
+        <mat-radio-button [value]="tipoPessoa.PESSOA_JURIDICA" (click)="adcionarRequiredPJ()">Pessoa Jurídica</mat-radio-button>
+        <mat-error *ngIf="monitorador.tipoPessoa == tipoPessoa.UNDEFINED" style="text-align: center">* Tipo de pessoa é <strong>obrigat&oacute;rio</strong></mat-error>
       </mat-radio-group>
     </div>
 
@@ -17,23 +18,28 @@
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Email</mat-label>
           <input matInput
+                 #email
                  formControlName="email"
                  name="email"
                  type="email"
                  placeholder="email@email.com">
           <mat-error *ngIf="monitoradorForm.hasError('required', 'email')">* Email é <strong>obrigat&oacute;rio</strong></mat-error>
-          <mat-error *ngIf="monitoradorForm.hasError('maxlength', 'email')">* Email tem que ter no m&aacute;ximo 50 caracteres</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('maxlength', 'email')">* Email com {{email.value.length}} de no máximo 50 caracteres</mat-error>
           <mat-error *ngIf="monitoradorForm.hasError('email', 'email')">* Email inválido</mat-error>
+          <mat-hint align="end">{{email.value.length}} /50</mat-hint>
         </mat-form-field>
 
         <!--TODO arrumar data-->
+
         <mat-form-field appearance="outline" class="row-col">
-          <mat-label>Data de nascimento</mat-label>
+          <mat-label>Data de Nasicmento</mat-label>
           <input matInput
+                 [matDatepicker]="picker"
                  formControlName="dataNascimento"
                  name="dataNascimento"
-                 type="text"
                  placeholder="dd/mm/aaaa">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="monitoradorForm.hasError('required', 'dataNascimento')">* Data de nascimento é <strong>obrigat&oacute;rio</strong></mat-error>
         </mat-form-field>
       </div>
@@ -42,12 +48,15 @@
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Nome</mat-label>
           <input matInput
+                 #nome
                  formControlName="nome"
                  name="nome"
                  type="text"
                  placeholder="Seu nome">
-          <mat-error *ngIf="monitoradorForm.hasError('minlength', 'nome') || monitoradorForm.hasError('maxlength', 'nome')">* Nome deve ter entre 3 e 30 caracteres</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('minlength', 'nome') || monitoradorForm.hasError('maxlength', 'nome')">* Nome deve ter entre 3 e 30 caracteres. Tem:{{nome.value.length}}</mat-error>
           <mat-error *ngIf="monitoradorForm.hasError('pattern', 'nome')">* Nome contém caracteres inválido</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'nome')">* Nome é <strong>obrigat&oacute;rio</strong></mat-error>
+          <mat-hint align="end">{{nome.value.length}} /30</mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="row-col">
@@ -59,6 +68,7 @@
                  placeholder="000.000.000-00"
                  [mask]="'000.000.000-00'">
           <mat-error *ngIf="monitoradorForm.hasError('pattern', 'cpf')">* CPF inválido</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'cpf')">* CPF é <strong>obrigat&oacute;rio</strong></mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="row-col">
@@ -70,6 +80,7 @@
                  placeholder="00.000.000-0"
                  [mask]="'00.000.000-0'">
           <mat-error *ngIf="monitoradorForm.hasError('pattern', 'rg')">* RG inválido</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'rg')">* RG é <strong>obrigat&oacute;rio</strong></mat-error>
         </mat-form-field>
       </div>
 
@@ -77,9 +88,14 @@
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Razão Social</mat-label>
           <input matInput
+                 #razaoSocial
+                 formControlName="razaoSocial"
                  name="razaoSocial"
                  type="text"
                  placeholder="Empresa X">
+          <mat-error *ngIf="monitoradorForm.hasError('minlength', 'razaoSocial') || monitoradorForm.hasError('maxlength', 'razaoSocial')">* Razão social deve ter entre 3 e 30 caracteres.  Tem:{{razaoSocial.value.length}}</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'razaoSocial')">* Razão Social é <strong>obrigat&oacute;rio</strong></mat-error>
+          <mat-hint align="end">{{razaoSocial.value.length}} /30</mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="row-col">
@@ -91,14 +107,18 @@
                  placeholder="00.000.000/0000-00"
                  [mask]="'00.000.000/0000-00'">
           <mat-error *ngIf="monitoradorForm.hasError('pattern', 'cnpj')">* CNPJ inválido</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'cnpj')">* CNPJ é <strong>obrigat&oacute;rio</strong></mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="row-col">
           <mat-label>Inscrição Estadual</mat-label>
           <input matInput
+                 formControlName="inscricaoEstadual"
                  name="inscricaoEstadual"
                  type="text"
                  placeholder="0000000-00">
+          <mat-error *ngIf="monitoradorForm.hasError('minlength', 'inscricaoEstadual') || monitoradorForm.hasError('maxlength', 'inscricaoEstadual') || monitoradorForm.hasError('pattern', 'inscricaoEstadual')">* Inscri&ccedil;&atilde;o social inválida</mat-error>
+          <mat-error *ngIf="monitoradorForm.hasError('required', 'inscricaoEstadual')">* Inscrição Social é <strong>obrigat&oacute;rio</strong></mat-error>
         </mat-form-field>
       </div>
 

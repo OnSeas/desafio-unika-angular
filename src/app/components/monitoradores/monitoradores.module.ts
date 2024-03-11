@@ -16,6 +16,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {EnderecoModule} from "./endereco/endereco.module";
 import {MatCardModule} from "@angular/material/card";
 import {NgxMaskModule} from "ngx-mask";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -23,22 +26,25 @@ import {NgxMaskModule} from "ngx-mask";
     MonitoradorFormComponent,
     MonitoradorListComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(MonitoradoresRoutes),
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        ReactiveFormsModule,
-        MatDatepickerModule,
-        MatTableModule,
-        FormsModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        EnderecoModule,
-        MatCardModule,
-        NgxMaskModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(MonitoradoresRoutes),
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatTableModule,
+    FormsModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    EnderecoModule,
+    MatCardModule,
+    NgxMaskModule,
+    MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule
+  ]
 })
 export class MonitoradoresModule { }
