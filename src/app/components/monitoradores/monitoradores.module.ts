@@ -19,12 +19,14 @@ import {NgxMaskModule} from "ngx-mask";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import { MonitoradorViewComponent } from './monitorador-view/monitorador-view.component';
 
 
 @NgModule({
   declarations: [
     MonitoradorFormComponent,
-    MonitoradorListComponent
+    MonitoradorListComponent,
+    MonitoradorViewComponent
   ],
   imports: [
     CommonModule,

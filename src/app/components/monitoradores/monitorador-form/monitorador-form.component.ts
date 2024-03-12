@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Monitorador} from "../Monitorador";
+import {Monitorador} from "../model/Monitorador";
 import {MonitoradorService} from "../monitorador.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {TipoPessoa} from "../TipoPessoa";
+import {TipoPessoa} from "../model/TipoPessoa";
 import {EnderecoService} from "../endereco/endereco.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {formatDate} from "@angular/common";

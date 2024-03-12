@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@types/file-saver": "^2.0.7",
+    "file-saver": "^2.0.5",
     "ngx-mask": "^14.3.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

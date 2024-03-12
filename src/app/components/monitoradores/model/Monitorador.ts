@@ -1,5 +1,5 @@
 import {TipoPessoa} from "./TipoPessoa";
-import {Endereco} from "./endereco/Endereco";
+import {Endereco} from "../endereco/Endereco";
 
 export class Monitorador {
   id?:number;
