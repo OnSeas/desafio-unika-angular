@@ -3,6 +3,8 @@ import {Endereco} from "../Endereco";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {EnderecoService} from "../endereco.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MySnackbarService} from "../../../my-snackbar/my-snackbar.service";
 
 @Component({
   selector: 'app-endereco-form',
@@ -20,7 +22,8 @@ export class EnderecoFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<EnderecoFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private enderecoService: EnderecoService
+    private enderecoService: EnderecoService,
+    private mySnackbarService: MySnackbarService
     ) {
     this.endereco = data.end;
     this.idMonitorador = data.idMon;
@@ -61,7 +64,7 @@ export class EnderecoFormComponent implements OnInit {
                 this.dialogRef.close(end);
               },
               error: (err) => {
-                alert(err.error);
+                this.mySnackbarService.openSnackBar(err.error, "danger");
               }
             });
         } else{ // Criando backend
@@ -70,7 +73,7 @@ export class EnderecoFormComponent implements OnInit {
               this.dialogRef.close(end);
             },
             error: (err) => {
-              alert(err.error);
+              this.mySnackbarService.openSnackBar(err.error, "danger");
             }
           });
         }
@@ -92,7 +95,7 @@ export class EnderecoFormComponent implements OnInit {
         this.enderecoForm.get('estado')?.setValue(end.estado);
       },
       error: (err) =>{
-        alert(err.error);
+        this.mySnackbarService.openSnackBar(err.error, "danger");
       }
     })
   }

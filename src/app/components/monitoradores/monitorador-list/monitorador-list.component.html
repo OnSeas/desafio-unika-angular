@@ -1,5 +1,6 @@
-<div class="content-center col-10">
-  <div *ngIf="dataSource.data.length > 0, else semMonitoradores">
+<div class="content-center col-10 position-relative">
+
+  <div [hidden]="dataSource.data.length <= 0">
     <div class="page-title">
       <h2>Lista de monitoradores</h2>
     </div>
@@ -86,12 +87,19 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
+    <mat-paginator [pageSize]="10"
+                   [hidden]="dataSource.data.length <= 10"
+                   showFirstLastButtons
+                   aria-label="Selecionar uma página de monitoradores">
+    </mat-paginator>
+
     <div class="mt-2">
       <button mat-flat-button color="accent" style="margin-right: 0.3rem">Exportar XLSX</button>
       <a mat-flat-button color="warn" (click)="baixarPdf()">Exporfatar PDF</a>
     </div>
   </div>
-  <ng-template #semMonitoradores>
+
+  <ng-template [ngIf]="dataSource.data.length <= 0">
     <div class="content-center col-5">
       <mat-card>
         <div>

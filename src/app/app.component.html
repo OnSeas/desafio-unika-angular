@@ -39,6 +39,12 @@
     </mat-drawer-content>
     <!-- page body -->
   </mat-drawer-container>
+
+  <div *ngIf="loading">
+    <mat-spinner class="spinner-popup"></mat-spinner>
+    <div class="spinner-background"></div>
+  </div>
+
 </div>
 
 

@@ -20,6 +20,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import { MonitoradorViewComponent } from './monitorador-view/monitorador-view.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -28,25 +29,26 @@ import { MonitoradorViewComponent } from './monitorador-view/monitorador-view.co
     MonitoradorListComponent,
     MonitoradorViewComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(MonitoradoresRoutes),
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatTableModule,
-    FormsModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    EnderecoModule,
-    MatCardModule,
-    NgxMaskModule,
-    MatCheckboxModule,
-    MatOptionModule,
-    MatSelectModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(MonitoradoresRoutes),
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatTableModule,
+        FormsModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        EnderecoModule,
+        MatCardModule,
+        NgxMaskModule,
+        MatCheckboxModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatPaginatorModule
+    ]
 })
 export class MonitoradoresModule { }

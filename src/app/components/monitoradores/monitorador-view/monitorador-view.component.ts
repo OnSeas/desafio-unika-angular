@@ -5,6 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {Endereco} from "../endereco/Endereco";
 import {MonitoradorService} from "../monitorador.service";
 import {TipoPessoa} from "../model/TipoPessoa";
+import {MySnackbarService} from "../../my-snackbar/my-snackbar.service";
 
 @Component({
   selector: 'app-monitorador-view',
@@ -19,7 +20,8 @@ export class MonitoradorViewComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<MonitoradorViewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private monitoradorService: MonitoradorService
+    private monitoradorService: MonitoradorService,
+    private mySnackbarService: MySnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -33,13 +35,13 @@ export class MonitoradorViewComponent implements OnInit {
       if (this.monitorador.id) this.monitoradorService.ativarMonitorador(this.monitorador.id).subscribe({
         next: (m => {
           this.monitorador.ativo = m.ativo;
-          alert("Monitorador ativado!");
+          this.mySnackbarService.openSnackBar("Monitorador ativado!", "success");
         }),
         error: (err => {
-          alert(err.error);
+          this.mySnackbarService.openSnackBar(err.error, "danger");
         })
       });
-      else alert("Não foi possível ativar o monitorador!");
+      else this.mySnackbarService.openSnackBar("Não foi possível ativar o monitorador!", "danger");
     }
   }
 
@@ -48,13 +50,13 @@ export class MonitoradorViewComponent implements OnInit {
       if (this.monitorador.id) this.monitoradorService.desativarMonitorador(this.monitorador.id).subscribe({
         next: (m => {
           this.monitorador.ativo = m.ativo;
-          alert("Monitorador desativado!");
+          this.mySnackbarService.openSnackBar("Monitorador desativado!", "success");
         }),
         error: (err => {
-          alert(err.error);
+          this.mySnackbarService.openSnackBar(err.error, "danger");
         })
       });
-      else alert("Não foi possível desativar o monitorador!");
+      else this.mySnackbarService.openSnackBar("Não foi possível desativar o monitorador!", "danger");
     }
   }
 

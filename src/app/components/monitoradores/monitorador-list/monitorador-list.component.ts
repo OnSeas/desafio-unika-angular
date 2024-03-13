@@ -1,19 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Monitorador} from "../model/Monitorador";
 import {MonitoradorService} from "../monitorador.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {MonitoradorViewComponent} from "../monitorador-view/monitorador-view.component";
 import {Filtro} from "../model/Filtro";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MatPaginator} from "@angular/material/paginator";
 import TipoPesquisa = Filtro.TipoPesquisa;
+import {MySnackbarService} from "../../my-snackbar/my-snackbar.service";
 
 @Component({
   selector: 'app-monitorador-list',
   templateUrl: './monitorador-list.component.html',
   styleUrls: ['./monitorador-list.component.scss']
 })
-export class MonitoradorListComponent implements OnInit {
+export class MonitoradorListComponent implements OnInit  {
   displayedColumns: string[] = ['position', 'tipoPessoa', 'email', 'dataNascimento', 'CPF/CNPJ', 'opcoes', 'info'];
   dataSource = new MatTableDataSource<Monitorador>;
   filtro: Filtro = new Filtro();
@@ -21,16 +22,25 @@ export class MonitoradorListComponent implements OnInit {
   pesquisaAtiva: boolean = false;
   tipoPesquisa = TipoPesquisa;
 
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(
     private monitoradorService: MonitoradorService,
     public dialog: MatDialog,
-    private sanitizer: DomSanitizer
-  ) {}
+    private mySnackbarService: MySnackbarService
+  ) {
+  }
 
   ngOnInit(): void {
-    this.monitoradorService.listarMinitoradores().subscribe((monitoradores:Monitorador[]) => {
+    this.monitoradorService.listarMinitoradores().subscribe({
+    next: (monitoradores:Monitorador[]) => {
       this.todosMonitoradores = monitoradores;
       this.dataSource.data = this.todosMonitoradores;
+      this.dataSource.paginator = this.paginator;
+    }, error: (err)=>{
+        this.mySnackbarService.openSnackBar(err.error, "danger");
+      }
     });
   }
 
@@ -38,10 +48,10 @@ export class MonitoradorListComponent implements OnInit {
     if (confirm("Tem certeza que deseja deletar o Monitorador "+id+"?")){
       this.monitoradorService.deletarMonitorador(id).subscribe({
         next: (monitoradorRes) =>{
-          alert("Monitorador excluído com sucesso!");
+          this.mySnackbarService.openSnackBar("Monitorador excluído com sucesso!", "success");
           this.dataSource.data = this.dataSource.data.filter(m => m.id != monitoradorRes.id);
         }, error: (err) =>{
-          alert(err.error);
+          this.mySnackbarService.openSnackBar(err.error, "danger");
         }
       })
     }
@@ -67,13 +77,13 @@ export class MonitoradorListComponent implements OnInit {
       this.monitoradorService.filtrarMonitoradores(this.filtro).subscribe({
         next: (monitoradores) => {
           this.dataSource.data = monitoradores;
-          alert("Monitoradores filtrados!");
+          this.mySnackbarService.openSnackBar("Monitoradores filtrados!", "success");
         },
         error: (err) =>{
-          alert(err.error);
+          this.mySnackbarService.openSnackBar(err.error, "danger");
         }
       });
-    } else alert("Pesquisa vazia.");
+    } else this.mySnackbarService.openSnackBar("Pesquisa vazia.", "danger");
   }
 
   private isValid(filtro: Filtro): boolean{
@@ -84,7 +94,7 @@ export class MonitoradorListComponent implements OnInit {
     this.pesquisaAtiva = false;
     this.dataSource.data = this.todosMonitoradores;
     this.filtro = new Filtro();
-    alert("Mostrando todos os monitoradores!");
+    this.mySnackbarService.openSnackBar("Mostrando todos os monitoradores!", "success");
   }
 
   baixarPdf() {
@@ -101,7 +111,7 @@ export class MonitoradorListComponent implements OnInit {
         a.click();
       },
       error: (err) => {
-      console.log(err.error);
+        this.mySnackbarService.openSnackBar(err.error, "danger");
     }
     })
   }

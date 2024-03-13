@@ -4,6 +4,7 @@ import {Endereco} from "../Endereco";
 import {EnderecoService} from "../endereco.service";
 import {MatDialog} from "@angular/material/dialog";
 import {EnderecoFormComponent} from "../endereco-form/endereco-form.component";
+import {MySnackbarService} from "../../../my-snackbar/my-snackbar.service";
 
 @Component({
   selector: 'app-endereco-list',
@@ -16,7 +17,11 @@ export class EnderecoListComponent implements OnInit {
 
   @Input() monitoradorId: string|null = null;
 
-  constructor(private enderecoService: EnderecoService, public dialog: MatDialog) {}
+  constructor(
+    private enderecoService: EnderecoService,
+    public dialog: MatDialog,
+    private mySnackbarService: MySnackbarService
+    ) {}
 
   ngOnInit(): void {
     this.dataSource.data = [];
@@ -26,14 +31,14 @@ export class EnderecoListComponent implements OnInit {
         this.enderecoService.setList(this.dataSource.data);
       },
       error: (err) =>{
-        alert(`Erro ao buscar endereços do monitorador ${this.monitoradorId}`);
+        this.mySnackbarService.openSnackBar(`Erro ao buscar endereços do monitorador ${this.monitoradorId}`, "danger");
         console.log(err.error);
       }
     });
   }
 
   openDialog(endereco: Endereco|null): void {
-    if(this.dataSource.data.length >= 3) alert("Você já temo número máximo de endereços: 3.");
+    if(this.dataSource.data.length >= 3) this.mySnackbarService.openSnackBar("Você já temo número máximo de endereços: 3.", "danger");
     else{
       const dialogRef = this.dialog.open(EnderecoFormComponent, {
         data: {
@@ -46,10 +51,10 @@ export class EnderecoListComponent implements OnInit {
           console.log(endResult); // Endereço recebido
           if(endereco){ // Editando o endereço
             this.dataSource.data[this.dataSource.data.indexOf(endereco)] = endResult;
-            alert("Endereço alterado com sucesso!");
+            this.mySnackbarService.openSnackBar("Endereço alterado com sucesso!", "success");
           } else{ // Criando o endereço
             this.dataSource.data.push(endResult);
-            alert("Endereço criado com sucesso!");
+            this.mySnackbarService.openSnackBar("Endereço criado com sucesso!", "success");
           }
           this.dataSource._updateChangeSubscription();
         }
@@ -59,21 +64,22 @@ export class EnderecoListComponent implements OnInit {
   }
 
   deletarEndereco(end: Endereco): void{
-    if (this.dataSource.data.length <= 1) alert("Monitorador não pode ficar sem endereços!");
+    if (this.dataSource.data.length <= 1) this.mySnackbarService.openSnackBar("Monitorador não pode ficar sem endereços!", "danger");
     else {
       if(confirm("Tem certeza que deseja deletar o endereço "+end.endereco+"?")){
         if(end.id) this.enderecoService.deletarEndereco(end.id).subscribe({
           next: (res) =>{
-            alert(`Endereço ${res.endereco} deletado com sucesso!`);
+            this.mySnackbarService.openSnackBar(`Endereço ${res.endereco} deletado com sucesso!`, "success");
             this.dataSource.data = this.dataSource.data.filter(endereco => endereco.id != res.id);
           },
           error: (err) =>{
-            alert(err.error);
+            this.mySnackbarService.openSnackBar(err.error, "danger");
           }
         });
         else{
           this.dataSource.data = this.dataSource.data.filter(endereco => endereco != end);
-          alert(`Endereço ${end.endereco} deletado com sucesso!`);
+          this.mySnackbarService.openSnackBar(`Endereço ${end.endereco} deletado com sucesso!`, "success");
+
         }
       }
       this.enderecoService.setList(this.dataSource.data);
@@ -90,19 +96,19 @@ export class EnderecoListComponent implements OnInit {
                 if (e.id != res.id) e.principal = false;
                 else e.principal = true;
               });
-              alert(`O endereço ${res.endereco} agora é o seu principal!`);
+              this.mySnackbarService.openSnackBar(`O endereço ${res.endereco} agora é o seu principal!`, "success");
             },
             error: (err) =>{
-              alert(err.error);
+              this.mySnackbarService.openSnackBar(err.error, "danger");
             }
           });
-        } else alert("Endereço não encontrado!");
+        } else this.mySnackbarService.openSnackBar("Endereço não encontrado!", "danger");
       } else {
         this.dataSource.data.forEach(e => {
           if (e != end) e.principal = false;
           else e.principal = true;
         });
-        alert(`O endereço ${end.endereco} agora é o seu principal!`);
+        this.mySnackbarService.openSnackBar(`O endereço ${end.endereco} agora é o seu principal!`, "success");
       }
       this.enderecoService.setList(this.dataSource.data);
     }

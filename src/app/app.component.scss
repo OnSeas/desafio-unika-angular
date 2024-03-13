@@ -1,3 +1,7 @@
+.position-relative{
+  position: relative;
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -24,4 +28,23 @@ $toolbarHeight : 60px;
 .content-card{
   margin: 0.5rem;
   height: 94.5%; // TODO descobrir o que acontece aqui.
+}
+
+.spinner-popup{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%), translateY(-50%);
+  z-index: 99999;
+}
+
+.spinner-background{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99998;
+  background-color: black;
+  opacity: 0.3;
 }

@@ -6,6 +6,7 @@ import {TipoPessoa} from "../model/TipoPessoa";
 import {EnderecoService} from "../endereco/endereco.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {formatDate} from "@angular/common";
+import {MySnackbarService} from "../../my-snackbar/my-snackbar.service";
 
 @Component({
   selector: 'app-monitorador-form',
@@ -24,7 +25,8 @@ export class MonitoradorFormComponent implements OnInit {
     private enderecoService: EnderecoService,
     public router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private mySnackbarService: MySnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +59,7 @@ export class MonitoradorFormComponent implements OnInit {
           }
         },
         error: (err) => {
-          alert(err.error);
+          this.mySnackbarService.openSnackBar(err.error, "danger");
         }
       });
     }
@@ -84,21 +86,21 @@ export class MonitoradorFormComponent implements OnInit {
       if (!this.monitorador.id) this.monitoradorService.cadastrarMonitorador(this.monitorador).subscribe({
         next: (monitorador: Monitorador) =>{
           console.log("monitorador BD: "+monitorador);
-          alert("Monitorador criado com sucesso!");
+          this.mySnackbarService.openSnackBar("Monitorador criado com sucesso!", "success");
           this.router.navigate(['../monitoradores']);
         },
-        error: (erro) => {
-          alert(erro.error);
+        error: (err) => {
+          this.mySnackbarService.openSnackBar(err.error, "danger");
         }
       });
 
       else this.monitoradorService.editarMonitorador(this.monitorador, this.monitorador.id).subscribe({
         next: (monitorador : Monitorador) => {
-          alert("Monitorador atualizado com sucesso!");
+          this.mySnackbarService.openSnackBar("Monitorador atualizado com sucesso!", "success");
           this.router.navigate(['../monitoradores']);
         },
         error: (err) => {
-          alert(err.error);
+          this.mySnackbarService.openSnackBar(err.error, "danger");
         }
       });
     }
