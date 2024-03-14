@@ -6,8 +6,10 @@ import {MatDialog} from "@angular/material/dialog";
 import {MonitoradorViewComponent} from "../monitorador-view/monitorador-view.component";
 import {Filtro} from "../model/Filtro";
 import {MatPaginator} from "@angular/material/paginator";
-import TipoPesquisa = Filtro.TipoPesquisa;
 import {MySnackbarService} from "../../my-snackbar/my-snackbar.service";
+import {MonitoradorImportComponent} from "../monitorador-import/monitorador-import.component";
+import TipoPesquisa = Filtro.TipoPesquisa;
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-monitorador-list',
@@ -42,18 +44,34 @@ export class MonitoradorListComponent implements OnInit  {
         this.mySnackbarService.openSnackBar(err.error, "danger");
       }
     });
+
+    this.listenAtualizarLista();
   }
 
-  deletarMonitorador(id: number){
-    if (confirm("Tem certeza que deseja deletar o Monitorador "+id+"?")){
-      this.monitoradorService.deletarMonitorador(id).subscribe({
-        next: (monitoradorRes) =>{
-          this.mySnackbarService.openSnackBar("Monitorador excluído com sucesso!", "success");
-          this.dataSource.data = this.dataSource.data.filter(m => m.id != monitoradorRes.id);
-        }, error: (err) =>{
-          this.mySnackbarService.openSnackBar(err.error, "danger");
-        }
-      })
+  listenAtualizarLista(){
+    this.monitoradorService.loadingListAsync
+      .pipe(delay(0))
+      .subscribe((list) => {
+        this.todosMonitoradores = list;
+        this.dataSource.data = this.todosMonitoradores;
+      });
+  }
+
+  deletarMonitorador(monitorador: Monitorador){
+    let confirmDialogMsg: string;
+    if (monitorador.tipoPessoa.toString() == "PESSOA_FISICA") confirmDialogMsg = "Tem certeza que deseja deletar o Monitorador "+monitorador.nome+"?";
+    else confirmDialogMsg = "Tem certeza que deseja deletar o Monitorador "+monitorador.razaoSocial+"?"
+
+    if (confirm(confirmDialogMsg)){
+      if(monitorador.id) this.monitoradorService.deletarMonitorador(monitorador.id).subscribe({
+          next: (monitoradorRes) =>{
+            this.mySnackbarService.openSnackBar("Monitorador excluído com sucesso!", "success");
+            this.dataSource.data = this.dataSource.data.filter(m => m.id != monitoradorRes.id);
+          }, error: (err) =>{
+            this.mySnackbarService.openSnackBar(err.error, "danger");
+          }
+        });
+      else this.mySnackbarService.openSnackBar("Erro ao buscar monitorador!", "danger");
     }
   }
 
@@ -98,15 +116,14 @@ export class MonitoradorListComponent implements OnInit  {
   }
 
   baixarPdf() {
-    this.monitoradorService.gerarRelatorioPdf().subscribe({
+    this.monitoradorService.gerarRelatorioPdf(null).subscribe({
       next: (data) => {
         var file = new Blob([data], { type: 'application/pdf' });
         var fileURL = URL.createObjectURL(file);
-
         var a = document.createElement('a');
-        a.href        = fileURL;
-        a.target      = '_blank';
-        a.download    = 'report.pdf';
+        a.href = fileURL;
+        a.target = '_blank';
+        a.download = 'relatorioGeral.pdf';
         document.body.appendChild(a);
         a.click();
       },
@@ -114,5 +131,29 @@ export class MonitoradorListComponent implements OnInit  {
         this.mySnackbarService.openSnackBar(err.error, "danger");
     }
     })
+  }
+
+  baixarXlsx() {
+    this.monitoradorService.gerarExcel().subscribe({
+      next: (data) => {
+        var file = new Blob([data], { type: 'application/octet-stream' });
+        var fileURL = URL.createObjectURL(file);
+        var a = document.createElement('a');
+        a.href = fileURL;
+        a.target = '_blank';
+        a.download = 'monitoradores.xlsx';
+        document.body.appendChild(a);
+        a.click();
+      },
+      error: (err) => {
+        this.mySnackbarService.openSnackBar(err.error, "danger");
+      }
+    })
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(MonitoradorImportComponent, {
+      width: '500px'
+    });
   }
 }

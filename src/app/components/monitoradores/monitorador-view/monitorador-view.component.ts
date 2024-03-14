@@ -68,4 +68,24 @@ export class MonitoradorViewComponent implements OnInit {
     if (this.monitorador.tipoPessoa.toString() == "PESSOA_FISICA") return this.monitorador.nome;
     else return this.monitorador.razaoSocial;
   }
+
+  gerarPDF(){
+    if(this.monitorador.id) this.monitoradorService.gerarRelatorioPdf(this.monitorador.id).subscribe({
+      next: (data) => {
+        var file = new Blob([data], { type: 'application/pdf' });
+        var fileURL = URL.createObjectURL(file);
+        var a = document.createElement('a');
+        a.href = fileURL;
+        a.target = '_blank';
+        if(this.monitorador.tipoPessoa.toString() == "PESSOA_FISICA") a.download = `relatorio-${this.monitorador.nome}.pdf`;
+        else a.download = `relatorio-${this.monitorador.razaoSocial}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+      },
+      error: (err) => {
+        this.mySnackbarService.openSnackBar(err.error, "danger");
+      }
+    })
+    else this.mySnackbarService.openSnackBar("Erro ao encontrar o monitorador!", "danger");
+  }
 }

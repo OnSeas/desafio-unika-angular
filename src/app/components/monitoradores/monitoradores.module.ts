@@ -21,13 +21,15 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import { MonitoradorViewComponent } from './monitorador-view/monitorador-view.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { MonitoradorImportComponent } from './monitorador-import/monitorador-import.component';
 
 
 @NgModule({
   declarations: [
     MonitoradorFormComponent,
     MonitoradorListComponent,
-    MonitoradorViewComponent
+    MonitoradorViewComponent,
+    MonitoradorImportComponent
   ],
     imports: [
         CommonModule,

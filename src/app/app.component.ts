@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {LoadingService} from "./loading.service";
 import {delay} from "rxjs";
+import {Endereco} from "./components/monitoradores/endereco/Endereco";
+import {MatDialog} from "@angular/material/dialog";
+import {MonitoradorImportComponent} from "./components/monitoradores/monitorador-import/monitorador-import.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -13,12 +17,26 @@ export class AppComponent implements OnInit{
   loading: boolean = false
 
   constructor(
-    private _loading: LoadingService
+    private _loading: LoadingService,
+    public dialog: MatDialog,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
     this.listenToLoading();
+  }
+
+  openDialog(): void {
+      const dialogRef = this.dialog.open(MonitoradorImportComponent, {
+        width: '500px'
+      });
+
+      dialogRef.afterClosed().subscribe((endResult: Endereco) => {
+        if (endResult){
+          this.router.navigate(['monitoradores/list'], {replaceUrl: true});
+        }
+      });
   }
 
   // listenToLoading + LoaderService + HttpRequestInterceptor servem para mostrar o spinner na tela enquanto espera por um http request.

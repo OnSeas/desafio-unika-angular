@@ -22,7 +22,7 @@ export class MySnackbarService {
 
     this.snackBar.openFromComponent(MySnackbarComponent, {
       duration: 4500,
-      horizontalPosition: 'end',
+      horizontalPosition: 'center',
       verticalPosition: 'top',
       panelClass: [this.classeSnackbar],
       data: {message: message}

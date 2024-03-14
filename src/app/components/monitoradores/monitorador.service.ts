@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Monitorador} from "./model/Monitorador";
-import {map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {Filtro} from "./model/Filtro";
 
 @Injectable({
@@ -10,6 +10,8 @@ import {Filtro} from "./model/Filtro";
 export class MonitoradorService {
 
   urlBackend: string = "http://localhost:8080/monitorador"
+  loadingListAsync: BehaviorSubject<Monitorador[]> = new BehaviorSubject<Monitorador[]>([]);
+
   constructor(private http: HttpClient) {}
 
   public listarMinitoradores(): Observable<Monitorador[]>{
@@ -44,7 +46,26 @@ export class MonitoradorService {
     return this.http.post<Monitorador[]>(`${this.urlBackend}/filtro`, filtro);
   }
 
-  public gerarRelatorioPdf(){
-      return this.http.get<Blob>(`${this.urlBackend}/report`, {responseType: 'blob' as 'json'});
+  public gerarRelatorioPdf(id: number|null){
+      if(id) return this.http.get(`${this.urlBackend}/report/${id}`, {responseType: 'arraybuffer'});
+      else return this.http.get(`${this.urlBackend}/report`, {responseType: 'arraybuffer'});
+  }
+
+  public gerarExcel(){
+    return this.http.get(`${this.urlBackend}/export/xlsx`, {responseType: 'arraybuffer'});
+  }
+
+  public importarMonitoradores(file: File){
+
+    let formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<Monitorador[]>(`${this.urlBackend}/import`, formData);
+  }
+
+  public atualizarListaAsync(){
+    this.listarMinitoradores().subscribe((monitoradores) => {
+      this.loadingListAsync.next(monitoradores);
+    });
   }
 }

@@ -27,6 +27,7 @@
         <button mat-flat-button
                 color="primary"
                 type="submit" (click)="filtrarMonitoradores()">Pesquisar</button>
+
         <div *ngIf="pesquisaAtiva">
           <div>
             <mat-checkbox style="margin-right: 0.5rem" [(ngModel)]="filtro.pessoaFisica" name="pessoaFisica">Pessoas Físicas</mat-checkbox>
@@ -45,7 +46,7 @@
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef> # </th>
-        <td mat-cell *matCellDef="let elementIndex = index; "> {{elementIndex + 1}} </td>
+        <td mat-cell *matCellDef="let elementIndex = index; ">{{elementIndex + 1}}</td>
       </ng-container>
 
       <ng-container matColumnDef="tipoPessoa">
@@ -72,7 +73,7 @@
         <th mat-header-cell *matHeaderCellDef> Op&ccedil;&otilde;es </th>
         <td mat-cell *matCellDef="let element">
           <button mat-flat-button color="primary" style="margin-right: 0.3rem" [routerLink]="['../editForm', element.id]">Editar</button>
-          <button mat-flat-button color="warn" (click)="deletarMonitorador(element.id)" >Excluir</button>
+          <button mat-flat-button color="warn" (click)="deletarMonitorador(element)" >Excluir</button>
         </td>
       </ng-container>
 
@@ -87,14 +88,16 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSize]="10"
-                   [hidden]="dataSource.data.length <= 10"
-                   showFirstLastButtons
-                   aria-label="Selecionar uma página de monitoradores">
-    </mat-paginator>
+    <div [hidden]="dataSource.data.length <= 10">
+      <mat-paginator [pageSize]="10"
+                     showFirstLastButtons
+                     aria-label="Selecionar uma página de monitoradores">
+      </mat-paginator>
+    </div>
+
 
     <div class="mt-2">
-      <button mat-flat-button color="accent" style="margin-right: 0.3rem">Exportar XLSX</button>
+      <button mat-flat-button color="accent" style="margin-right: 0.3rem" (click)="baixarXlsx()">Exportar XLSX</button>
       <a mat-flat-button color="warn" (click)="baixarPdf()">Exporfatar PDF</a>
     </div>
   </div>
@@ -107,7 +110,7 @@
         </div>
         <div class="row-2">
           <button mat-flat-button color="primary" class="row-col" style="margin-right: 0.5rem" [routerLink]="['../', 'newForm']">Criar monitorador</button>
-          <button mat-flat-button class="row-col">Importar monitoradores</button>
+          <button mat-flat-button class="row-col" color="accent" (click)="openDialog()">Importar monitoradores</button>
         </div>
       </mat-card>
     </div>
