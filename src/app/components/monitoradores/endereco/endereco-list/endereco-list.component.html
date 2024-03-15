@@ -1,13 +1,13 @@
 <div class="content-center">
   <div class="row col-2">
     <button mat-flat-button
-            color="primary"
+            color="accent"
             class="row-col"
             (click)="openDialog(null)">Novo endere&ccedil;o</button>
   </div>
   <div *ngIf="dataSource.data.length > 0, else semEnderecos">
     <div class="page-title mt-3">
-      <h3>Lista de endere&ccedil;os</h3>
+      <h3>Endere&ccedil;os</h3>
     </div>
 
     <table mat-table [dataSource]="dataSource">
@@ -62,7 +62,7 @@
 
   <ng-template #semEnderecos>
     <div class="mt-3">
-      <p style="text-align: center">Você ainda não cadastrou nenhum endereço!</p>
+      <h2 style="text-align: center">Você ainda não cadastrou nenhum endereço!</h2>
     </div>
   </ng-template>
 </div>

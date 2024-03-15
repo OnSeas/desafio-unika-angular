@@ -7,26 +7,30 @@
 
     <div class="content-end">
       <form ngForm class="form-max-spacing">
-        <mat-form-field appearance="outline" style="margin-right: 0.5rem; width: 150px" *ngIf="pesquisaAtiva">
-          <mat-select [(ngModel)]="filtro.tipoBusca" placeholder="Tipo de pesquisa" name="tipoPesquisa">
-            <mat-option [value]="tipoPesquisa.CPF">CPF</mat-option>
-            <mat-option [value]="tipoPesquisa.CNPJ">CNPJ</mat-option>
-            <mat-option [value]="tipoPesquisa.EMAIL">Email</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div>
+          <mat-form-field appearance="outline" style="margin-right: 0.5rem; width: 150px" *ngIf="pesquisaAtiva">
+            <mat-select [(ngModel)]="filtro.tipoBusca" placeholder="Tipo de pesquisa" name="tipoPesquisa">
+              <mat-option [value]="tipoPesquisa.CPF">CPF</mat-option>
+              <mat-option [value]="tipoPesquisa.CNPJ">CNPJ</mat-option>
+              <mat-option [value]="tipoPesquisa.EMAIL">Email</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" style="margin-right: 0.5rem">
-          <mat-label>Pesquisar</mat-label>
-          <input matInput
-                 [(ngModel)]="filtro.busca"
-                 (focus)="pesquisaAtiva = true"
-                 name="busca"
-                 type="text">
-        </mat-form-field>
+          <mat-form-field appearance="outline" style="margin-right: 0.5rem">
+            <mat-label>Pesquisar</mat-label>
+            <input matInput
+                   [(ngModel)]="filtro.busca"
+                   (focus)="pesquisaAtiva = true"
+                   name="busca"
+                   type="text">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
 
-        <button mat-flat-button
-                color="primary"
-                type="submit" (click)="filtrarMonitoradores()">Pesquisar</button>
+          <button mat-flat-button
+                  class="search-button"
+                  color="accent"
+                  type="submit" (click)="filtrarMonitoradores()">Pesquisar</button>
+        </div>
 
         <div *ngIf="pesquisaAtiva">
           <div>
@@ -35,7 +39,7 @@
             <mat-checkbox class="example-margin" [(ngModel)]="filtro.soAtivados" name="soAtivos">Apenas ativadas</mat-checkbox>
           </div>
 
-          <div class="mt-2 mb-1">
+          <div class="mt-1 mb-1">
             <button mat-stroked-button (click)="limparPesquisa()">Limpar pesquisa</button>
           </div>
         </div>
@@ -96,7 +100,7 @@
     </div>
 
 
-    <div class="mt-2">
+    <div class="mt-1">
       <button mat-flat-button color="accent" style="margin-right: 0.3rem" (click)="baixarXlsx()">Exportar XLSX</button>
       <a mat-flat-button color="warn" (click)="baixarPdf()">Exporfatar PDF</a>
     </div>

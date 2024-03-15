@@ -1,0 +1,33 @@
+.tipo-pessoa input[type='radio']{
+  display: none;
+}
+
+.tipo-pessoa label{
+  text-align: center;
+  border: 1px solid  #dcdcdc;
+  background-color: white;
+  padding: 8px 28px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #3f51b5;
+}
+
+.tipo-pessoa .label-1{
+  border-radius: 5px 0 0 5px;
+}
+
+.tipo-pessoa .label-2{
+  border-radius: 0 5px 5px 0;
+}
+
+.tipo-pessoa label:hover{
+  background-color: #fafafa;
+}
+
+.tipo-pessoa input[type = 'radio']:checked + label{
+  background: #3f51b5;
+  border-color: #3f51b5;
+  color: white;
+}
+
+

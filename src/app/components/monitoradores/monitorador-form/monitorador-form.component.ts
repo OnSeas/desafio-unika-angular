@@ -47,7 +47,7 @@ export class MonitoradorFormComponent implements OnInit {
     const id = this.getMonitoradorId();
     if(id){
       this.monitoradorService.buscarById(parseInt(id)).subscribe({next: (monitorador) => {
-          monitorador.tipoPessoa = getTipoPessoa(monitorador.tipoPessoa.toString());
+          monitorador.tipoPessoa = this.getTipoPessoa(monitorador.tipoPessoa.toString());
           this.monitorador = monitorador;
           console.log(this.monitorador);
           this.monitoradorForm.setValue(this.monitorador);
@@ -83,33 +83,34 @@ export class MonitoradorFormComponent implements OnInit {
       this.setMonitorador();
       console.log(this.monitorador);
 
-      if (!this.monitorador.id) this.monitoradorService.cadastrarMonitorador(this.monitorador).subscribe({
-        next: (monitorador: Monitorador) =>{
-          console.log("monitorador BD: "+monitorador);
-          this.mySnackbarService.openSnackBar("Monitorador criado com sucesso!", "success");
-          this.router.navigate(['../monitoradores']);
-        },
-        error: (err) => {
-          this.mySnackbarService.openSnackBar(err.error, "danger");
-        }
-      });
-
-      else this.monitoradorService.editarMonitorador(this.monitorador, this.monitorador.id).subscribe({
-        next: (monitorador : Monitorador) => {
-          this.mySnackbarService.openSnackBar("Monitorador atualizado com sucesso!", "success");
-          this.router.navigate(['../monitoradores']);
-        },
-        error: (err) => {
-          this.mySnackbarService.openSnackBar(err.error, "danger");
-        }
-      });
+      if (this.monitorador.enderecoList.length <= 0){
+        this.mySnackbarService.openSnackBar("É necessário cadastrar pelo menos um endereço.", "danger");
+      }else {
+        if (!this.monitorador.id) this.monitoradorService.cadastrarMonitorador(this.monitorador).subscribe({
+          next: (monitorador: Monitorador) =>{
+            console.log("monitorador BD: "+monitorador);
+            this.mySnackbarService.openSnackBar("Monitorador criado com sucesso!", "success");
+            this.router.navigate(['../monitoradores']);
+          },
+          error: (err) => {
+            this.mySnackbarService.openSnackBar(err.error, "danger");
+          }
+        });
+        else this.monitoradorService.editarMonitorador(this.monitorador, this.monitorador.id).subscribe({
+          next: (monitorador : Monitorador) => {
+            this.mySnackbarService.openSnackBar("Monitorador atualizado com sucesso!", "success");
+            this.router.navigate(['../monitoradores']);
+          },
+          error: (err) => {
+            this.mySnackbarService.openSnackBar(err.error, "danger");
+          }
+        });
+      }
     }
   }
 
   setMonitorador(){
     this.monitorador.enderecoList = this.enderecoService.getList();
-
-    console.log(this.monitoradorForm.getRawValue());
 
     this.monitorador.email = this.monitoradorForm.get('email')?.getRawValue();
     this.monitorador.dataNascimento = formatDate(this.monitoradorForm.get('dataNascimento')?.getRawValue(), 'dd/MM/yyyy', "pt-BR"); // TODO
@@ -159,10 +160,18 @@ export class MonitoradorFormComponent implements OnInit {
       }
     });
   }
+
+  private getTipoPessoa(tipo: string): TipoPessoa {
+    if (tipo === "PESSOA_FISICA") {
+      this.adcionarRequiredPF();
+      return TipoPessoa.PESSOA_FISICA;
+    }
+    else if (tipo === "PESSOA_JURIDICA") {
+      this.adcionarRequiredPJ();
+      return TipoPessoa.PESSOA_JURIDICA;
+    }
+    else return TipoPessoa.UNDEFINED;
+  }
 }
 
-function getTipoPessoa(tipo: string): TipoPessoa {
-  if (tipo === "PESSOA_FISICA") return TipoPessoa.PESSOA_FISICA;
-  else if (tipo === "PESSOA_JURIDICA") return TipoPessoa.PESSOA_JURIDICA;
-  else return TipoPessoa.UNDEFINED;
-}
+
