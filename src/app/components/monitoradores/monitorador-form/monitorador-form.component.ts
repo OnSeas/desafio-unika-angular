@@ -112,14 +112,14 @@ export class MonitoradorFormComponent implements OnInit {
   setMonitorador(){
     this.monitorador.enderecoList = this.enderecoService.getList();
 
-    this.monitorador.email = this.monitoradorForm.get('email')?.getRawValue();
-    this.monitorador.dataNascimento = formatDate(this.monitoradorForm.get('dataNascimento')?.getRawValue(), 'dd/MM/yyyy', "pt-BR"); // TODO
-    this.monitorador.nome = this.monitoradorForm.get('nome')?.getRawValue();
-    this.monitorador.cpf = this.monitoradorForm.get('cpf')?.getRawValue();
-    this.monitorador.rg = this.monitoradorForm.get('rg')?.getRawValue();
-    this.monitorador.razaoSocial = this.monitoradorForm.get('razaoSocial')?.getRawValue();
-    this.monitorador.cnpj = this.monitoradorForm.get('cnpj')?.getRawValue();
-    this.monitorador.inscricaoEstadual = this.monitoradorForm.get('inscricaoEstadual')?.getRawValue();
+    this.monitorador.email = this.monitoradorForm.get('email')?.value;
+    this.monitorador.dataNascimento = formatDate(this.monitoradorForm.get('dataNascimento')?.value, 'dd/MM/yyyy', "pt-BR"); // TODO
+    this.monitorador.nome = this.monitoradorForm.get('nome')?.value;
+    this.monitorador.cpf = this.monitoradorForm.get('cpf')?.value;
+    this.monitorador.rg = this.monitoradorForm.get('rg')?.value;
+    this.monitorador.razaoSocial = this.monitoradorForm.get('razaoSocial')?.value;
+    this.monitorador.cnpj = this.monitoradorForm.get('cnpj')?.value;
+    this.monitorador.inscricaoEstadual = this.monitoradorForm.get('inscricaoEstadual')?.value;
   }
 
   adcionarRequiredPF(){ // Ao tentar salvar adiciona o validator de null nos campos de pessoa física ou jurídica.

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Monitorador} from "./model/Monitorador";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {Filtro} from "./model/Filtro";
@@ -43,7 +43,17 @@ export class MonitoradorService {
   }
 
   public filtrarMonitoradores(filtro: Filtro): Observable<Monitorador[]>{
-    return this.http.post<Monitorador[]>(`${this.urlBackend}/filtro`, filtro);
+    if (filtro.busca) filtro.busca = filtro.busca.trim();
+
+    return this.http.get<Monitorador[]>(`${this.urlBackend}/filtro`, {
+      params : {
+        busca: filtro.busca,
+        tipoBusca: filtro.tipoBusca.valueOf(),
+        soAtivados: filtro.soAtivados,
+        pessoaFisica: filtro.pessoaFisica,
+        pessoaJuridica: filtro.pessoaJuridica
+      }
+    });
   }
 
   public gerarRelatorioPdf(id: number|null){

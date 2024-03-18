@@ -1,10 +1,10 @@
 export class Filtro
 {
-  busca?: string;
-  tipoBusca?: Filtro.TipoPesquisa;
-  pessoaFisica?: boolean;
-  pessoaJuridica?: boolean;
-  soAtivados?: boolean;
+  busca!: string;
+  tipoBusca!: Filtro.TipoPesquisa;
+  pessoaFisica!: boolean;
+  pessoaJuridica!: boolean;
+  soAtivados!: boolean;
 }
 
 export namespace Filtro
@@ -13,6 +13,7 @@ export namespace Filtro
   {
     CPF,
     CNPJ,
-    EMAIL
+    EMAIL,
+    UNDEFINED
   }
 }

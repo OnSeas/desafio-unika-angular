@@ -8,8 +8,8 @@ import {Filtro} from "../model/Filtro";
 import {MatPaginator} from "@angular/material/paginator";
 import {MySnackbarService} from "../../my-snackbar/my-snackbar.service";
 import {MonitoradorImportComponent} from "../monitorador-import/monitorador-import.component";
-import TipoPesquisa = Filtro.TipoPesquisa;
 import {delay} from "rxjs";
+import TipoPesquisa = Filtro.TipoPesquisa;
 
 @Component({
   selector: 'app-monitorador-list',
@@ -85,17 +85,21 @@ export class MonitoradorListComponent implements OnInit  {
   }
 
   filtrarMonitoradores(){
+    if (this.filtro.busca == null) this.filtro.busca = '';
+    if (this.filtro.soAtivados == null) this.filtro.soAtivados = false;
     if (this.filtro.pessoaFisica == null) this.filtro.pessoaFisica = false;
     if (this.filtro.pessoaJuridica == null) this.filtro.pessoaJuridica = false;
-    if (this.filtro.soAtivados == null) this.filtro.soAtivados = false;
-
+    if (this.filtro.tipoBusca == null) this.filtro.tipoBusca = TipoPesquisa.UNDEFINED;
     console.log(this.filtro);
 
     if (this.isValid(this.filtro)){
       this.monitoradorService.filtrarMonitoradores(this.filtro).subscribe({
         next: (monitoradores) => {
-          this.dataSource.data = monitoradores;
-          this.mySnackbarService.openSnackBar("Monitoradores filtrados!", "success");
+          if (monitoradores.length > 0){
+            this.dataSource.data = monitoradores;
+            this.mySnackbarService.openSnackBar("Monitoradores filtrados!", "success");
+          } else this.mySnackbarService.openSnackBar("Não há monitoradores com as informações selecionadas!", "danger");
+
         },
         error: (err) =>{
           this.mySnackbarService.openSnackBar(err.error, "danger");
@@ -105,7 +109,7 @@ export class MonitoradorListComponent implements OnInit  {
   }
 
   private isValid(filtro: Filtro): boolean{
-    return !((filtro.busca == null || filtro.busca == '') && filtro.soAtivados == false && filtro.pessoaFisica == false && filtro.pessoaJuridica == false);
+    return !((filtro.busca == null || filtro.busca == '') && !filtro.soAtivados && !filtro.pessoaFisica && !filtro.pessoaJuridica);
   }
 
   limparPesquisa(){
