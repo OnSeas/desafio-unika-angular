@@ -56,7 +56,6 @@ export class EnderecoFormComponent implements OnInit {
   salvar(){
     if (!this.enderecoForm.valid) this.validarTodosOsCampos(this.enderecoForm);
     else { // Form valid
-      this.enderecoForm.get('principal')?.setValue(false); // TODO
       if (this.idMonitorador) { //Monitorador já existe
         if (this.endereco && this.endereco.id) { // Editando backend
             this.enderecoService.editarEndereco(this.endereco.id, this.enderecoForm.value).subscribe({

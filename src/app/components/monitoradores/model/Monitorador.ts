@@ -5,7 +5,6 @@ export class Monitorador {
   id?:number;
   tipoPessoa!: TipoPessoa;
   email?: string;
-  //TODO data de nascimento - ver como é melhor de fazer e conversão correta.;
   dataNascimento?: string;
   cpf?: string;
   rg?: string;

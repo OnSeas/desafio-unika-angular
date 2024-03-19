@@ -109,7 +109,7 @@ export class MonitoradorListComponent implements OnInit  {
   }
 
   private isValid(filtro: Filtro): boolean{
-    return !((filtro.busca == null || filtro.busca == '') && !filtro.soAtivados && !filtro.pessoaFisica && !filtro.pessoaJuridica);
+    return !((filtro.busca == null || filtro.busca == '' || filtro.tipoBusca == null || filtro.tipoBusca == TipoPesquisa.UNDEFINED) && !filtro.soAtivados && !filtro.pessoaFisica && !filtro.pessoaJuridica);
   }
 
   limparPesquisa(){

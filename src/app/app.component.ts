@@ -41,7 +41,7 @@ export class AppComponent implements OnInit{
 
   // listenToLoading + LoaderService + HttpRequestInterceptor servem para mostrar o spinner na tela enquanto espera por um http request.
   // Foram feitos com base nesse site:  https://medium.com/swlh/angular-loading-spinner-using-http-interceptor-63c1bb76517b
-  listenToLoading(): void { // TODO dar uma analisada melhor
+  listenToLoading(): void {
     this._loading.loadingSub
       .pipe(delay(0))
       .subscribe((loading: boolean) => {

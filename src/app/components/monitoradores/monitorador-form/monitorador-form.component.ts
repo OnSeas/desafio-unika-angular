@@ -113,7 +113,7 @@ export class MonitoradorFormComponent implements OnInit {
     this.monitorador.enderecoList = this.enderecoService.getList();
 
     this.monitorador.email = this.monitoradorForm.get('email')?.value;
-    this.monitorador.dataNascimento = formatDate(this.monitoradorForm.get('dataNascimento')?.value, 'dd/MM/yyyy', "pt-BR"); // TODO
+    this.monitorador.dataNascimento = formatDate(this.monitoradorForm.get('dataNascimento')?.value, 'dd/MM/yyyy', "pt-BR");
     this.monitorador.nome = this.monitoradorForm.get('nome')?.value;
     this.monitorador.cpf = this.monitoradorForm.get('cpf')?.value;
     this.monitorador.rg = this.monitoradorForm.get('rg')?.value;

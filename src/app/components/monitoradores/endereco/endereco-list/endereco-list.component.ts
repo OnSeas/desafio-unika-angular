@@ -48,6 +48,12 @@ export class EnderecoListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((endResult: Endereco) => {
         if (endResult){
+
+          // Tornar o endereço principal se não tiver outro;
+          let temPrincipal: boolean = false;
+          this.dataSource.data.forEach(e => {if(e.principal) temPrincipal = true;})
+          endResult.principal = !temPrincipal;
+
           console.log(endResult); // Endereço recebido
           if(endereco){ // Editando o endereço
             this.dataSource.data[this.dataSource.data.indexOf(endereco)] = endResult;

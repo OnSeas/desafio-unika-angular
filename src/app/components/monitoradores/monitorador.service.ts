@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Monitorador} from "./model/Monitorador";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Filtro} from "./model/Filtro";
 
 @Injectable({
