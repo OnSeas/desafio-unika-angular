@@ -7,18 +7,6 @@
       <div>
           <div class="row-2 pb-1">
             <mat-form-field appearance="outline" class="row-col">
-              <mat-label>CEP</mat-label>
-              <input matInput
-                     formControlName="cep"
-                     type="text"
-                     placeholder="00000-000"
-                     (blur)="buscarEndereco()"
-                     [mask]="'00000-000'">
-              <mat-error *ngIf="enderecoForm.hasError('required', 'cep')">* CEP é <strong>obrigat&oacute;rio</strong></mat-error>
-              <mat-error *ngIf="enderecoForm.hasError('pattern', 'cep')">* CEP inválido</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="row-col">
               <mat-label>Endere&ccedil;o</mat-label>
               <input matInput
                      #enderecoId
@@ -29,6 +17,18 @@
               <mat-error *ngIf="enderecoForm.hasError('required', 'endereco')">* Endere&ccedil;o é <strong>obrigat&oacute;rio</strong></mat-error>
               <mat-error *ngIf="enderecoForm.hasError('minlength', 'endereco') || enderecoForm.hasError('maxlength', 'endereco')">* Endere&ccedil;o deve ter entre 3 e 50 caracteres. Tem: {{enderecoId.value.length}}</mat-error>
               <mat-hint align="end">{{enderecoId.value.length}} /50</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="row-col">
+              <mat-label>CEP</mat-label>
+              <input matInput
+                     formControlName="cep"
+                     type="text"
+                     placeholder="00000-000"
+                     (blur)="buscarEndereco()"
+                     [mask]="'00000-000'">
+              <mat-error *ngIf="enderecoForm.hasError('required', 'cep')">* CEP é <strong>obrigat&oacute;rio</strong></mat-error>
+              <mat-error *ngIf="enderecoForm.hasError('pattern', 'cep')">* CEP inválido</mat-error>
             </mat-form-field>
           </div>
 
