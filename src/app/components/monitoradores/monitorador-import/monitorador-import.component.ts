@@ -22,11 +22,13 @@ export class MonitoradorImportComponent implements OnInit {
   selectedFile: any = null;
   onFileSelected(event: any): void {
     if (event.target.files[0]){
-      this.selectedFile = event.target.files[0];
+      if (event.target.files[0].size > (50 * 1048576)) this.mySnackbarService.openSnackBar("Arquivo só pode ter até 50MB!", "danger");
+      else this.selectedFile = event.target.files[0];
     }
   }
 
   importar(){
+
     if (this.selectedFile){
       this.monitoradorService.importarMonitoradores(this.selectedFile).subscribe({
         next: (result) =>{
